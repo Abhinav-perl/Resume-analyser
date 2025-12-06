@@ -1,11 +1,3 @@
-# Resume analyser — Full fixed script
-# Supports: PDF (PyPDF2 + OCR fallback), JPG/PNG (OCR), WordNet synonyms,
-# resilient POS fallback, template suggestions, sidebar layout (About + How it works + Settings)
-#
-# Installation (Ubuntu):
-# sudo apt update
-# sudo apt install -y tesseract-ocr poppler-utils
-# pip install streamlit matplotlib scikit-learn PyPDF2 pdf2image pytesseract nltk
 
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -21,10 +13,7 @@ import pytesseract
 from pdf2image import convert_from_bytes
 import io
 
-# ----------------------------
-# Silent NLTK downloads (Part A)
-# ----------------------------
-# Try to download quietly at startup; if it fails, fallback logic handles missing resources.
+
 nltk_pkgs = ["punkt", "stopwords", "wordnet", "omw-1.4", "averaged_perceptron_tagger"]
 for pkg in nltk_pkgs:
     try:
