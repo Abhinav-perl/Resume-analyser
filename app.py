@@ -14,23 +14,22 @@ from pdf2image import convert_from_bytes
 import io
 
 
-nltk_pkgs = ["punkt", "stopwords", "wordnet", "omw-1.4", "averaged_perceptron_tagger"]
+nltk_pkgs = ["punkt", "punkt_tab", "stopwords", "wordnet", "omw-1.4", "averaged_perceptron_tagger"]
+
 for pkg in nltk_pkgs:
     try:
-        # attempt to find pkg; different paths for different pkg types
-        if pkg == "punkt":
-            nltk.data.find("tokenizers/punkt")
+        if pkg in ("punkt", "punkt_tab"):
+            nltk.data.find(f"tokenizers/{pkg}")
         elif pkg == "averaged_perceptron_tagger":
             nltk.data.find("taggers/averaged_perceptron_tagger")
-        elif pkg in ("wordnet", "omw-1.4"):
-            nltk.data.find("corpora/" + pkg)
-        else:
-            nltk.data.find("corpora/" + pkg)
+        else:  # stopwords, wordnet, omw-1.4
+            nltk.data.find(f"corpora/{pkg}")
     except LookupError:
         try:
             nltk.download(pkg, quiet=True)
         except Exception:
-            pass  # if download fails, we'll still run with fallbacks
+            # If download fails (no internet, etc.), we rely on fallback logic later
+            pass
 
 # ----------------------------
 # Page config & Sidebar UI
