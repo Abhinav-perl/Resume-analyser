@@ -28,12 +28,10 @@ for pkg in nltk_pkgs:
         try:
             nltk.download(pkg, quiet=True)
         except Exception:
-            # If download fails (no internet, etc.), we rely on fallback logic later
+            
             pass
 
-# ----------------------------
 # Page config & Sidebar UI
-# ----------------------------
 st.set_page_config(page_title="Resume Job Match — OCR + Synonyms + Suggestions",
                    page_icon="📄", layout="wide")
 
@@ -63,10 +61,7 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Notes: OCR is slower. Synonyms improve recall but may introduce false positives.")
 
-# ----------------------------
 # Helper functions
-# ----------------------------
-
 def extract_text_from_pdf(uploaded_file, ocr_if_empty=True):
     """Extract text using PyPDF2; fallback to OCR (pdf2image + pytesseract) if empty and allowed."""
     try:
@@ -237,9 +232,7 @@ def extract_top_keywords(job_text, k=10):
     top_n = [feature_array[i] for i in tfidf_sorting][:k]
     return top_n
 
-# ----------------------------
 # Resilient verb extractor (Part B)
-# ----------------------------
 def extract_common_verbs(resume_text, top_n=5):
     import re
     tokens = []
